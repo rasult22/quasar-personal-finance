@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header class="bg-green" elevated>
       <q-toolbar>
         <q-btn
           flat
@@ -36,8 +36,8 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer elevated class="bg-grey-8 text-white">
-      <q-list class="row">
+    <q-footer elevated class="bg-green text-white">
+      <q-list class="row justify-around">
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
@@ -56,6 +56,18 @@ const linksData = [
     title: "Main",
     caption: "Main Page",
     icon: "home",
+    link: "/"
+  },
+   {
+    title: "Settings",
+    caption: "Personal settings",
+    icon: "settings",
+    link: "/"
+  },
+   {
+    title: "Additional features",
+    caption: "Future coming additional features",
+    icon: "lightbulb",
     link: "/"
   }
 ]

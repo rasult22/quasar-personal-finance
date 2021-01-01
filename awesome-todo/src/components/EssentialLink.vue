@@ -3,6 +3,7 @@
     clickable
     tag="a"
     :href="link"
+    class="bg-green"
   >
     <q-item-section
       v-if="icon"
