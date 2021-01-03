@@ -3,8 +3,8 @@
     <q-card class="my-card">
       <q-card-section>
         <div>
-          <div class="text-h6">Current account</div>
-          <div class="text-subtitle2">25.650 ₸</div>
+          <div class="text-h6">Balance</div>
+          <div class="text-subtitle2">{{getBalance}} ₸</div>
         </div>
         <div></div>
       </q-card-section>
@@ -15,9 +15,9 @@
     </q-card>
     <q-card class="q-mt-md">
       <q-markup-table flat bordered>
-        <thead>
-          <tr>
-            <th class="text-left">Description</th>
+        <thead class="bg-blue-1">
+          <tr >
+            <th class="text-left ">Description</th>
             <th class="text-left">Category</th>
             <th class="text-left">Cash</th>
             <th class="text-left">Date</th>
@@ -63,67 +63,28 @@
         </tbody>
       </q-markup-table>
     </q-card>
-    <div class="add-button">
-      <q-btn round color="green" @click="addMode = !addMode" icon="add" />
-    </div>
-    <q-dialog v-model="addMode">
-      <q-card class="my-card">
-        <q-parallax
-          src="https://previews.customer.envatousercontent.com/files/315831155/preview.jpg"
-          :height="100"
-        />
-        <q-card-section>
-          <div class="text-h6">New opeation</div>
-          <q-form>
-            <div class="d-flex">
-              <q-input
-                class="full-width"
-                v-model="amount"
-                standout="bg-green text-white"
-                append="cash-100"
-                label="Amount"
-                type="number"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="money" />
-                </template>
-              </q-input>
-              <q-select
-                class="q-ml-sm"
-                standout="bg-green"
-                :options="currencyOptions"
-                v-model="currency"
-              ></q-select>
-            </div>
-            <q-card-actions>
-              <q-btn class="bg-green text-white">Create</q-btn>
-            </q-card-actions>
-          </q-form>
-        </q-card-section>
-        <q-card-section>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <OpearationForm />
   </q-page>
 </template>
 
 <script>
+import OpearationForm from './OperationForm'
+import {mapGetters} from 'vuex'
 export default {
+  components: {
+    OpearationForm
+  },
+  computed: {
+    ...mapGetters({
+      getBalance: 'mainPage/getBalance'
+    })
+  },
   data() {
     return {
-      addMode: false,
-      amount: 0,
-      currencyOptions: ["$", "₸"],
-      currency: "₸"
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.add-button {
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-}
+
 </style>
