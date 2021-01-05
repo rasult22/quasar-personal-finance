@@ -17,48 +17,22 @@
       <q-markup-table flat bordered>
         <thead class="bg-blue-1">
           <tr >
-            <th class="text-left ">Description</th>
+            <th class="text-left ">Comments</th>
             <th class="text-left">Category</th>
             <th class="text-left">Cash</th>
             <th class="text-left">Date</th>
-            <th class="text-left">Opeation type</th>
+            <th class="text-left">Operation type</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-left">Frozen Yogurt</td>
-            <td class="text-left">Food</td>
-            <td class="text-left">- 620 ₸</td>
-            <td class="text-left">2020-01-02</td>
-            <td class="text-left color-red">Spending</td>
-          </tr>
-          <tr>
-            <td class="text-left">Ice cream sandwich</td>
-            <td class="text-left">Payday</td>
-            <td class="text-left">+ 250.000 ₸</td>
-            <td class="text-left">2020-01-02</td>
-            <td class="text-left color-green">Income</td>
-          </tr>
-          <tr>
-            <td class="text-left">Eclair</td>
-            <td class="text-left">Freelance</td>
-            <td class="text-left">+ 16.000 ₸</td>
-            <td class="text-left">2020-01-02</td>
-            <td class="text-left color-green">Income</td>
-          </tr>
-          <tr>
-            <td class="text-left">Cupcake</td>
-            <td class="text-left">Food</td>
-            <td class="text-left">- 2300 ₸</td>
-            <td class="text-left">2020-01-02</td>
-            <td class="text-left color-red">Spending</td>
-          </tr>
-          <tr>
-            <td class="text-left">Gingerbread</td>
-            <td class="text-left">Bills</td>
-            <td class="text-left">- 27.000 ₸</td>
-            <td class="text-left">2020-01-02</td>
-            <td class="text-left color-red">Spending</td>
+          <tr v-for="operation in operations" 
+          :key="operation.date + operation.amount + operation.comments" 
+          >
+            <td :class="{'tr-expense': operation.postType === 'expense', 'tr-income' :operation.postType === 'income'}" class="text-left">{{operation.comments}}</td>
+            <td class="text-left">{{operation.category}}</td>
+            <td class="text-left">{{operation.postType === 'income' ? '+' : '-'}} {{`${operation.amount} ${operation.currency}`}}</td>
+            <td class="text-left">{{ operation.date }}</td>
+            <td class="text-left">{{ operation.postType}}</td>
           </tr>
         </tbody>
       </q-markup-table>
@@ -76,7 +50,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getBalance: 'mainPage/getBalance'
+      getBalance: 'mainPage/getBalance',
+      operations: 'mainPage/getOperations'
     })
   },
   data() {
@@ -86,5 +61,18 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+.tr-income {
+  //transform: scale(1);
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    left:5px;
+    top: 5px;
+    background:green;
+    border-radius: 100%;
+  }
+}
 </style>
