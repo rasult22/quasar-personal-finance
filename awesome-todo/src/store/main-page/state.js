@@ -1,5 +1,6 @@
 export default function () {
   return {
-    balance: 0
+    balance: 0,
+    operations:[]
   }
 }

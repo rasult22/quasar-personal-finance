@@ -31,7 +31,7 @@
                 class="full-width"
                 v-model="amount"
                 standout="bg-green text-white"
-                label="Amount"
+                label="Amount *"
                 type="number"
               >
                 <template v-slot:prepend>
@@ -49,7 +49,7 @@
             <q-select
               class="q-ml-sm full-width q-mt-sm"
               standout="bg-green text-white"
-              label="Category"
+              label="Category *"
               :options="
                 postType === 'income'
                   ? incomeCategoryOptions
@@ -61,7 +61,16 @@
                 <q-icon name="category" />
               </template>
             </q-select>
-            <q-btn class="bg-green text-white q-mt-lg">Create</q-btn>
+            <q-input
+              v-model="comments"
+              filled
+              label="Comments"
+              class="q-mt-md"
+              standout="bg-green text-white"
+              type="textarea"
+            > 
+            </q-input>
+            <q-btn @click="createOperation" class="bg-green text-white q-mt-lg">Create</q-btn>
           </q-form>
         </q-card-section>
       </q-card>
@@ -85,13 +94,27 @@ export default {
       incomeCategoryOptions: ["Payday", "Freelance", "Business", "Other"],
       expenseCategoryOptions: ["Food", "Transport", "Bills"],
       category: "",
-      testprop: 1
+      comments: ''
     }
   },
-  watch: {
-    addMode(value) {
-      this.addModeInner = value
+  methods: {
+    createOperation () {
+      let operation = new Operation(this.amount, this.postType, this.currency, this.category, this.comments)
+      this.$store.commit('mainPage/createOperation', operation )
+      this.addMode = false
     }
+  }
+}
+
+
+class Operation {
+  constructor (amount, postType, currency, category, comments, date = new Date().toISOString().split('T')[0]) {
+    this.amount = amount
+    this.postType = postType
+    this.currency = currency
+    this.category = category
+    this.comments = comments
+    this.date = date
   }
 }
 </script>
