@@ -84,7 +84,8 @@ export default {
       currency: "₸",
       incomeCategoryOptions: ["Payday", "Freelance", "Business", "Other"],
       expenseCategoryOptions: ["Food", "Transport", "Bills"],
-      category: ""
+      category: "",
+      testprop: 1
     }
   },
   watch: {
