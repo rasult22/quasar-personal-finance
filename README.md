@@ -1,2 +1,2 @@
 # Personal Finance App
-Trying quasar for the first time
+Trying quasar for the first time.
