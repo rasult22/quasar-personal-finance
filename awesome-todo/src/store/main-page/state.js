@@ -1,6 +1,13 @@
 export default function () {
   return {
-    balance: 0,
+    account: {
+      balance: 0,
+      diffBalance:0,
+      currency: '₸',
+      diffCurrency:'',
+      hasDiffCurrency: false,
+      name: 'Main account'
+    },
     operations:[]
   }
 }

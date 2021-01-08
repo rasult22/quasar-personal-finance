@@ -3,8 +3,12 @@
     <q-card class="my-card">
       <q-card-section>
         <div>
-          <div class="text-h6">Balance</div>
-          <div class="text-subtitle2">{{getBalance}} ₸</div>
+          <div class="text-h6">{{getAccount.name}}</div>
+          <div class="text-subtitle2">{{getAccount.balance.toLocaleString('en-US')}} {{getAccount.currency}}</div>
+        </div>
+        <div class="q-mt-md" v-if="getAccount.hasDiffCurrency">
+          <p class="text-subtitle2">Additional balance</p>
+          {{ getAccount.diffBalance.toLocaleString('en-US')   }} {{getAccount.diffCurrency}}
         </div>
         <div></div>
       </q-card-section>
@@ -50,7 +54,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getBalance: 'mainPage/getBalance',
+      getAccount: 'mainPage/getAccount',
       operations: 'mainPage/getOperations'
     })
   },
@@ -72,6 +76,20 @@ export default {
     left:5px;
     top: 5px;
     background:green;
+    border-radius: 100%;
+  }
+}
+.tr-expense {
+  //transform: scale(1);
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    left:5px;
+    top: 5px;
+    background:red;
     border-radius: 100%;
   }
 }
