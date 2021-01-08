@@ -121,8 +121,8 @@ class Operation {
 
 <style lang="scss" scoped>
 .add-button {
-  position: absolute;
-  bottom: 30px;
+  position: fixed;
+  bottom: 70px;
   right: 30px;
 }
 </style>

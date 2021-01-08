@@ -4,11 +4,11 @@
       <q-card-section>
         <div>
           <div class="text-h6">{{getAccount.name}}</div>
-          <div class="text-subtitle2">{{getAccount.balance.toLocaleString('en-US')}} {{getAccount.currency}}</div>
+          <div class="text-subtitle2">Balance: {{getAccount.balance.toLocaleString('en-US')}} {{getAccount.currency}}</div>
         </div>
         <div class="q-mt-md" v-if="getAccount.hasDiffCurrency">
-          <p class="text-subtitle2">Additional balance</p>
-          {{ getAccount.diffBalance.toLocaleString('en-US')   }} {{getAccount.diffCurrency}}
+          <p class="text-subtitle2">Additional account</p>
+          <p class="text-subtitle2">Balance: {{ getAccount.diffBalance.toLocaleString('en-US')   }} {{getAccount.diffCurrency}} </p>
         </div>
         <div></div>
       </q-card-section>
