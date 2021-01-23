@@ -2,36 +2,36 @@
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-green" elevated>
       <q-toolbar>
-        <q-btn
+        <!-- <q-btn
           flat
           dense
           round
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
-        />
+        /> -->
 
-        <q-toolbar-title> Personal Finance App </q-toolbar-title>
+        <q-toolbar-title> {{this.$router.history.current.name}} </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label header class="text-grey-8">
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+      <!-- <q-drawer
+        v-model="leftDrawerOpen"
+        show-if-above
+        bordered
+        content-class="bg-grey-1"
+      >
+        <q-list>
+          <q-item-label header class="text-grey-8">
+            Essential Links
+          </q-item-label>
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </q-list>
+      </q-drawer> -->
 
     <q-page-container>
       <router-view />
@@ -62,7 +62,7 @@ const linksData = [
     title: "Settings",
     caption: "Personal settings",
     icon: "settings",
-    link: "/"
+    link: "/settings"
   },
    {
     title: "Additional features",
@@ -79,6 +79,11 @@ export default {
     return {
       leftDrawerOpen: false,
       essentialLinks: linksData
+    }
+  },
+  methods: {
+    logger(item) {
+      console.log(item)
     }
   }
 }
