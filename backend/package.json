@@ -1,0 +1,14 @@
+{
+  "name": "finance-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "author": "Turganov Rassulzhan",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.12.3"
+  }
+}
