@@ -3,7 +3,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
+// Middleware for letting client poss data
 app.use(express.json())
+
 app.use(express.urlencoded({ extended: false }))
 
 mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true})
@@ -16,7 +18,7 @@ db.once('open', function() {
 })
 
 // Operations API route
-app.use('api/operations', require('./routes/api/operations'))
+app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 
 
 app.listen(5000, () => {
