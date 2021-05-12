@@ -20,7 +20,7 @@ db.once('open', function() {
 // Operations API route
 app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 
-
-app.listen(5000, () => {
+const PORT = 5000
+app.listen(PORT, () => {
   console.log('Server started on:', 5000)
 })
