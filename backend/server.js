@@ -19,6 +19,7 @@ db.once('open', function() {
 
 // Operations API route
 app.use('/api/v1/operations', require('./routes/api/v1/operations'))
+app.use('/api/v1/users', require('./routes/api/v1/users'))
 
 const PORT = 5000
 app.listen(PORT, () => {
