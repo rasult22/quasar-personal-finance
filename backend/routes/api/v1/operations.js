@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
   })
 })
 
-// Get single operation by ID
+// GET single operation by ID
 router.get('/:id', (req, res) => {
   if(false) {
     return res.status(404).json({
@@ -33,14 +33,14 @@ router.get('/:id', (req, res) => {
 })
 
 
-// Post single operation
+// POST single operation
 router.post('/', (req, res) => {
   console.log(req.body)
   res.status(200).json(req.body)
 })
 
 
-// Patch request example 
+// PATCH request example 
 
 router.patch('/:id', (req, res) => {
   // Particulary updating operation object
