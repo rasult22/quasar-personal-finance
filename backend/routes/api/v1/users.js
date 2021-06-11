@@ -3,6 +3,10 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 
+router.param('id', (req, res, next, value) => {
+  console.log(value)
+  next()
+})
 
 // Fetch all the users
 router.get('/', (req, res) => {
