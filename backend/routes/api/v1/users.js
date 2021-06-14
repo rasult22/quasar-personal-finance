@@ -4,6 +4,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 
 router.param('id', (req, res, next, value) => {
+  // param middleware example
   console.log(value)
   next()
 })

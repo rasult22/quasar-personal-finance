@@ -1,10 +1,22 @@
 const express = require('express')
 // const path = require('')
+const morgan = require('morgan')
 const mongoose = require('mongoose')
+const path = require('path')
 const app = express()
 
+// Environment variables
+dotenv.config({path: './config.env'})
+
 // Middleware for letting client poss data
+if(process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 app.use(express.json())
+app.use(express.static(`${__dirname}/public`))
+
+
+
 
 app.use(express.urlencoded({ extended: false }))
 
@@ -21,7 +33,7 @@ db.once('open', function() {
 app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
-  console.log('Server started on:', 5000)
+  console.log('Server started on:', PORT)
 })
