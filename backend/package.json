@@ -1,46 +1,46 @@
 {
-  "name": "finance-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "start:dev": "nodemon server",
-    "start:prod": "NODE_ENV=production nodemon server"
-  },
-  "author": "Turganov Rassulzhan",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "moment": "^2.29.1",
-    "mongoose": "^5.12.3",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.7"
-  },
-  "eslintConfig": {
-    "extends": "airbnb-base",
-    "env": {
-        "es6": true,
-        "browser": true
+    "name": "finance-app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon server",
+        "start:prod": "NODE_ENV=production nodemon server"
     },
-    "rules": {
-        "brace-style": [
-            "error",
-            "stroustrup"
-        ],
-        "comma-dangle": [
-            "error",
-            "never"
-        ],
-        "no-unused-vars": [
-            "warn"
-        ],
-        "no-var": [
-            "off"
-        ],
-        "one-var": [
-            "off"
-        ]
+    "author": "Turganov Rassulzhan",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "moment": "^2.29.1",
+        "mongoose": "^5.12.13",
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.7"
+    },
+    "eslintConfig": {
+        "extends": "airbnb-base",
+        "env": {
+            "es6": true,
+            "browser": true
+        },
+        "rules": {
+            "brace-style": [
+                "error",
+                "stroustrup"
+            ],
+            "comma-dangle": [
+                "error",
+                "never"
+            ],
+            "no-unused-vars": [
+                "warn"
+            ],
+            "no-var": [
+                "off"
+            ],
+            "one-var": [
+                "off"
+            ]
+        }
     }
-  }
 }

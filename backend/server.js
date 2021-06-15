@@ -1,7 +1,7 @@
 const express = require('express')
-// const path = require('')
-const morgan = require('morgan')
 const mongoose = require('mongoose')
+
+const morgan = require('morgan')
 const path = require('path')
 const app = express()
 const dotenv = require('dotenv')
@@ -21,15 +21,20 @@ app.use(express.static(`${__dirname}/public`))
 
 app.use(express.urlencoded({ extended: false }))
 
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true})
-const db = mongoose.connection
+// local DB
+// const localDB = process.env.DATABASE_LOCAL
 
-db.on('error', console.error.bind(console, 'connection error'))
-db.once('open', function() {
-  // we are connected
-  console.log('MongoDB: We are connected')
-})
+// cloud DB
+const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD)
 
+// mongoose.connect(localDB, {
+mongoose.connect(DB, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+}).then(connection => console.log('DB connection successful'))
+
+ 
 // Operations API route
 app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
