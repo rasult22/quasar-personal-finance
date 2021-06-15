@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const path = require('path')
 const app = express()
+const dotenv = require('dotenv')
 
 // Environment variables
 dotenv.config({path: './config.env'})
