@@ -1,2 +1,6 @@
 # Personal Finance App
-Trying quasar for the first time.
+
+### Tech Stack:
+Node.js with Express framework.  
+MongoDB with Mongoose and Atlas Cloud Store.  
+Vue.js with Quasar Framework.  
