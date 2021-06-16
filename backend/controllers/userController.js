@@ -1,6 +1,5 @@
 const User = require('../models/userModel')
 
-// Just a random comment
  
 exports.createUser = async (req, res) => {
 
@@ -27,6 +26,31 @@ exports.deleteUser = (req, res) => {
 
 }
 
-exports.getUsers = (req, res) => {}
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find()
 
-exports.getUserById = (req, res) => {}
+    res.status(200).json({
+      status: 'success',
+      results: users.length,
+      data: { users}
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    })
+  }
+}
+
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById()
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    })
+  }
+}
