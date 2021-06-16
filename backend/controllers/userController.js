@@ -1,6 +1,6 @@
 const User = require('../models/userModel')
 
-
+// Just a random comment
  
 exports.createUser = async (req, res) => {
 
