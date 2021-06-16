@@ -34,8 +34,10 @@ mongoose.connect(DB, {
   useFindAndModify: false
 }).then(connection => console.log('DB connection successful'))
 
- 
-// Operations API route
+
+
+
+// Operations, Users API route
 app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 

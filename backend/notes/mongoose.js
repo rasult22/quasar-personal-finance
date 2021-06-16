@@ -44,7 +44,8 @@ const mongoose= require('mongoose')
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: [true, 'A user must have name']
+    require: [true, 'A user must have name'],
+    unique: true
   },
   balance: {
     type: Number,
@@ -57,3 +58,17 @@ const userSchema = new mongoose.Schema({
 
 })
 
+
+const User = mongoose.model('user', userSchema)
+
+const testUser = new User( {
+  name: 'Rassulzhan',
+  balance: 27000.00
+})
+
+// Save to collection
+testUser.save().then(doc => {
+  console.log(doc)
+}).catch(e => {
+  console.log('ERROR:', e)
+})

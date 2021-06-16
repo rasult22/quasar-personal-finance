@@ -1,73 +1,21 @@
-// Operations List API
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
+const { createUser, updateUser, deleteUser, getUsers, getUserById } = require('./../../../controllers/userController')
 
-router.param('id', (req, res, next, value) => {
-  // param middleware example
-  console.log(value)
-  next()
-})
 
 // Fetch all the users
-router.get('/', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    results: 1,
-    data:
-      [
-        { type:'income', amount: 2000, description: '' }
-      ]
-  })
-})
+router.get('/', getUsers)
 
 // Get single user by ID
-router.get('/:id', (req, res) => {
-  if(false) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID'
-    })
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: { name: 'single operation' }
-  })
-
-})
-
+router.get('/:id', getUserById)
 
 // Post single user
-router.post('/', (req, res) => {
-  console.log(req.body)
-  res.status(200).json(req.body)
-})
-
+router.post('/create', createUser)
 
 // Patch request example 
-
-router.patch('/:id', (req, res) => {
-  // Particulary updating user object
-  res.status(200).json({
-    status: 'success',
-    data: {
-      operation: 'Partulary Updated operation',
-      id: req.params.id
-    }
-  })
-})
+router.patch('/:id', updateUser)
 
 // DELETE request example
-
-router.delete('/:id', (req, res) => {
-  // Particulary updating user object
-  res.status(200).json({
-    status: 'success',
-    data: {
-      operation: `operation with id: ${req.params.id} is deleted`
-    }
-  })
-})
+router.delete('/:id', deleteUser)
 
 module.exports = router
