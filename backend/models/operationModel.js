@@ -23,20 +23,7 @@ const operationSchema = new mongoose.Schema({
   type: {
     type: String,
     required: [true, 'an operation must have a type']
-  }
-  // images: [String]  array of strings
-  // accounts:[
-  //   {
-  //     type: 'bank'
-  //   },
-  //   {
-  //     type: 'cash'
-  //   {
-  //     type: 'crypto'
-  //   }
-  // ],
-  
-
+  }  
 })
 
 
