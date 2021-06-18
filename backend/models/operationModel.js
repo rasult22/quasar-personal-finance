@@ -5,16 +5,18 @@ const operationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
-  value: { // ?????????????????
+  value: {
     type: Number,
     required: [true, 'an operation must have a value']
   },
   category: {
+
     type: String,
     required: [true, 'an operation must have a category'],
   },
   comments: {
     type: String,
+    
     default: '-',
     trim: true
   },
@@ -38,6 +40,6 @@ const operationSchema = new mongoose.Schema({
 })
 
 
-const User = mongoose.model('user', userSchema)
+const Operation = mongoose.model('operation', operationSchema)
 
-module.exports = User
+module.exports = Operation
