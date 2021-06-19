@@ -56,12 +56,16 @@ exports.deleteUser = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
+    // build query
     const queryObj = {...req.query }
     const excludeFields = ['page', 'sort', 'limit', 'fields']
 
     excludeFields.forEach(field => delete queryObj[field])
 
-    const users = await User.find(queryObj)
+    const query =  User.find(queryObj)
+    
+    // execute the query
+    const users = await query
 
     res.status(200).json({
       status: 'success',
