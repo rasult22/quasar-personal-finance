@@ -2,6 +2,9 @@
 ### Get All the operations
 GET http://localhost:5000/api/v1/users/
 
+### Get All the operations with filters
+GET http://localhost:5000/api/v1/users?balance_gte=2000
+
 
 ### Get single operation by ID
 GET http://localhost:5000/api/v1/users/2

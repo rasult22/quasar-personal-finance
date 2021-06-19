@@ -72,3 +72,15 @@ testUser.save().then(doc => {
 }).catch(e => {
   console.log('ERROR:', e)
 })
+
+
+
+
+
+
+
+User.find({
+  rating: 3
+})
+
+User.find().where('rating').equals(3)
