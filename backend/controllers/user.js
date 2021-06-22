@@ -57,13 +57,13 @@ exports.deleteUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     // build query
-    // 1. Filtering
+    // 1A. Filtering
     const queryObj = {...req.query }
     const excludeFields = ['page', 'sort', 'limit', 'fields']
 
     excludeFields.forEach(field => delete queryObj[field])
 
-    // 2. Advanced filtering
+    // 1B. Advanced filtering
     // {rating: 3, balance: { $gte: 5 }}
     
     // gte, gt, lte, lt
@@ -72,8 +72,17 @@ exports.getUsers = async (req, res) => {
     queryStr = JSON.parse(queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`))
 
 
-    const query =  User.find(queryStr)
+    let query =  User.find(queryStr)
     
+    // 2) Sorting
+    if(req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ')
+      query = query.sort(sortBy)
+
+      // sort('balance rating')
+    } else {
+      query = query.sort('-createdAt')
+    }
 
     // execute the query
     const users = await query
