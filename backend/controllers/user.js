@@ -57,13 +57,24 @@ exports.deleteUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     // build query
+    // 1. Filtering
     const queryObj = {...req.query }
     const excludeFields = ['page', 'sort', 'limit', 'fields']
 
     excludeFields.forEach(field => delete queryObj[field])
 
-    const query =  User.find(queryObj)
+    // 2. Advanced filtering
+    // {rating: 3, balance: { $gte: 5 }}
     
+    // gte, gt, lte, lt
+    let queryStr = JSON.stringify(queryObj)
+    
+    queryStr = JSON.parse(queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`))
+
+
+    const query =  User.find(queryStr)
+    
+
     // execute the query
     const users = await query
 
