@@ -84,6 +84,18 @@ exports.getUsers = async (req, res) => {
       query = query.sort('-createdAt')
     }
 
+
+    // 3) Field limiting
+    if(req.query.fields) {
+      let fields = req.query.fields.split(',').join(' ')
+
+      // projecting
+      // query = query.select('name balance rating')
+      query = query.select(fields)
+    } else {
+      query = query.select('-__v')
+    }
+
     // execute the query
     const users = await query
 
