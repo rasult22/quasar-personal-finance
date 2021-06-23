@@ -96,19 +96,40 @@ exports.getUsers = async (req, res) => {
       query = query.select('-__v')
     }
 
+    // 4) Pagination
+   
+    /* 
+      page=2&limit=10    
+        (page 1 | 1-10)
+        (page 2 | 11-20)
+        (page 3 | 21-30)
+      query = query.skip(10).limit(10) - skipping first 10 items and take the next 10 items
+    */
+    const page = req.query.page * 1 || 1
+    const limit = req.query.limit * 1 || 20
+    const skip = (page - 1) * limit
+
+    query = query.skip(skip).limit(limit)
+    
+    if(req.query.page) {
+      const usersCount = await User.countDocuments()
+      if(skip >= usersCount) throw new Error('This page does not exits')
+    }
     // execute the query
     const users = await query
 
     res.status(200).json({
       status: 'success',
+      page: page,
       results: users.length,
       data: { users}
     })
 
   } catch (err) {
+    console.log(err)
     res.status(400).json({
       status: 'fail',
-      message: err
+      message: err?.message || err
     })
   }
 }

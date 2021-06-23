@@ -114,5 +114,31 @@ User.find().where('rating').equals(3)
       query = query.sort('-createdAt')
     }
 
+     // 3) Field limiting
+     if(req.query.fields) {
+      let fields = req.query.fields.split(',').join(' ')
+
+      // projecting
+      // query = query.select('name balance rating')
+      query = query.select(fields)
+    } else {
+      query = query.select('-__v')
+    }
+
+    // 4) Pagination
+   
+    /* 
+      page=2&limit=10    
+        (page 1 | 1-10)
+        (page 2 | 11-20)
+        (page 3 | 21-30)
+      query = query.skip(10).limit(10) - skipping first 10 items and take the next 10 items
+    */
+      const page = req.query.page * 1 || 1
+      const limit = req.query.limit * 1 || 20
+      const skip = (page - 1) * limit
+  
+      query = query.skip(skip).limit(limit)
+      
     // execute the query
     const users = await query
