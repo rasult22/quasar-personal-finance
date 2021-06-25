@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { createUser, updateUser, deleteUser, getUsers, getUserById } = require('../../../controllers/user')
+const { createUser, updateUser, deleteUser, getUsers, getUserById, aliasTopUsers } = require('../../../controllers/user')
 
+
+// Alias for top 3 users by rating 
+router.get('/topUsers', aliasTopUsers, getUsers )
 
 // Fetch all the users
 router.get('/', getUsers)

@@ -1,5 +1,12 @@
 const User = require('../models/userModel')
 
+
+exports.aliasTopUsers = (req, res, next) => {
+  req.query.limit = '3'
+  req.query.sort = '-rating'
+  req.query.fields = 'name,rating,balance'
+  next()
+}
  
 exports.createUser = async (req, res) => {
 
@@ -68,10 +75,7 @@ exports.getUsers = async (req, res) => {
     
     // gte, gt, lte, lt
     let queryStr = JSON.stringify(queryObj)
-    
     queryStr = JSON.parse(queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`))
-
-
     let query =  User.find(queryStr)
     
     // 2) Sorting
