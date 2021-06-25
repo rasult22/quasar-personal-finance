@@ -13,7 +13,7 @@ router.get('/', getUsers)
 router.get('/:id', getUserById)
 
 // Post single user
-router.post('/create', createUser)
+router.post('/', createUser)
 
 // Patch request example 
 router.patch('/:id', updateUser)

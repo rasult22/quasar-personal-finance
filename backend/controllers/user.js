@@ -1,5 +1,5 @@
 const User = require('../models/userModel')
-
+const APIFeatures = require('../utils/apiFeatures')
 
 exports.aliasTopUsers = (req, res, next) => {
   req.query.limit = '3'
@@ -63,68 +63,16 @@ exports.deleteUser = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    // build query
-    // 1A. Filtering
-    const queryObj = {...req.query }
-    const excludeFields = ['page', 'sort', 'limit', 'fields']
-
-    excludeFields.forEach(field => delete queryObj[field])
-
-    // 1B. Advanced filtering
-    // {rating: 3, balance: { $gte: 5 }}
-    
-    // gte, gt, lte, lt
-    let queryStr = JSON.stringify(queryObj)
-    queryStr = JSON.parse(queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`))
-    let query =  User.find(queryStr)
-    
-    // 2) Sorting
-    if(req.query.sort) {
-      const sortBy = req.query.sort.split(',').join(' ')
-      query = query.sort(sortBy)
-
-      // sort('balance rating')
-    } else {
-      query = query.sort('-createdAt')
-    }
-
-
-    // 3) Field limiting
-    if(req.query.fields) {
-      let fields = req.query.fields.split(',').join(' ')
-
-      // projecting
-      // query = query.select('name balance rating')
-      query = query.select(fields)
-    } else {
-      query = query.select('-__v')
-    }
-
-    // 4) Pagination
-   
-    /* 
-      page=2&limit=10    
-        (page 1 | 1-10)
-        (page 2 | 11-20)
-        (page 3 | 21-30)
-      query = query.skip(10).limit(10) - skipping first 10 items and take the next 10 items
-    */
-    const page = req.query.page * 1 || 1
-    const limit = req.query.limit * 1 || 20
-    const skip = (page - 1) * limit
-
-    query = query.skip(skip).limit(limit)
-    
-    if(req.query.page) {
-      const usersCount = await User.countDocuments()
-      if(skip >= usersCount) throw new Error('This page does not exits')
-    }
-    // execute the query
-    const users = await query
+    const features = new APIFeatures(User.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate()
+    const users = await features.mongoQuery
 
     res.status(200).json({
       status: 'success',
-      page: page,
+      page: features.paginationPage,
       results: users.length,
       data: { users}
     })
@@ -153,3 +101,5 @@ exports.getUserById = async (req, res) => {
     })
   }
 }
+
+
