@@ -102,4 +102,47 @@ exports.getUserById = async (req, res) => {
   }
 }
 
-
+exports.getUserStats = async (req, res) => {
+  try {
+    const stats = await User.aggregate([
+      {
+        $match: {
+          rating: {$gte: 1.5}
+        }
+      },
+      {
+        $group: {
+          _id: '$createdAt',
+          numUsers: { $sum: 1},
+          avgRating: {
+            $avg: '$rating'
+          },
+          avgBalance: {
+            $avg: '$balance'
+          },
+          minBalance: {
+            $min: '$balance'
+          },
+          maxBalance: {
+            $max: '$balance'
+          }
+        }
+      },
+      {
+        $sort: {
+            avgBalance: 1
+        }
+      }
+    ])
+    res.status(200).json({
+      status: 'success',
+      data: { stats }
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({
+      status: 'fail',
+      message: error
+    })
+  }
+}
