@@ -1,5 +1,5 @@
 const express = require('express')
-const { route } = require('../routes/api/v1/operations')
+const { route } = require('../../routes/api/v1/operations')
 
 const router = express.Router()
 
