@@ -1,4 +1,5 @@
 const mongoose= require('mongoose')
+const slugify = require('slugify')
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -7,6 +8,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
+  slug: String,
   balance: { // ?????????????????
     type: Number,
     required: [true, 'A user must have a balance']
@@ -42,7 +44,24 @@ userSchema.virtual('pseudoname').get(function () {
   return this.rating > 4 ? 'TIGER' : 'CAT'
 })
 
+// Middlewares
+// DOCUMENT MIDDLEWARE: runs before the .save() command and .create()
+// .insertMany() -- will not trigger this middleware
+userSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, {lower: true})
+  next()
+})
 
+userSchema.pre('save', function (next) {
+  // do whatever you want
+  console.log('HAHAHAHAHAHAHAAHAHAAHA')
+  next()
+})
+
+userSchema.post('save', function (doc, next) {
+  console.log(doc)
+  next()
+})
 
 const User = mongoose.model('user', userSchema)
 
