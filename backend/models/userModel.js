@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now()
+  },
+  secretUser: {
+    type: Boolean,
+    default: false
   }
   // images: [String]  array of strings
   // accounts:[
@@ -44,25 +48,19 @@ userSchema.virtual('pseudoname').get(function () {
   return this.rating > 4 ? 'TIGER' : 'CAT'
 })
 
-// Middlewares
-// DOCUMENT MIDDLEWARE: runs before the .save() command and .create()
-// .insertMany() -- will not trigger this middleware
-userSchema.pre('save', function (next) {
-  this.slug = slugify(this.name, {lower: true})
+// QUERY MIDDLEWARE 
+// userSchema.pre('find', function(next) {
+userSchema.pre(/^find/, function(next) {
+  this.find({ secretUser: { $ne: true }})
+  this.startTime = Date.now()
   next()
 })
 
-userSchema.pre('save', function (next) {
-  // do whatever you want
-  console.log('HAHAHAHAHAHAHAAHAHAAHA')
+userSchema.post(/^find/, function(docs, next) {
+  console.log(Date.now() - this.startTime + 'ms')
+  console.log(docs);
   next()
 })
-
-userSchema.post('save', function (doc, next) {
-  console.log(doc)
-  next()
-})
-
 const User = mongoose.model('user', userSchema)
 
 module.exports = User
