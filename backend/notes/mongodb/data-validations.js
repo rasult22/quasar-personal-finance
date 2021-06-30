@@ -1,5 +1,12 @@
-const mongoose= require('mongoose')
-const slugify = require('slugify')
+// Validation - checking if entered value is right format
+// for each field in our document schema
+
+
+// Sanitization - is to ensure that the inputted data is
+// basically clean, so that there is no malicious code being
+// injected into our databases, or into the application itself
+
+
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -62,24 +69,5 @@ const userSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 })
 
-// Virtual Property
-userSchema.virtual('pseudoname').get(function () {
-  return this.rating > 4 ? 'TIGER' : 'CAT'
-})
 
-// QUERY MIDDLEWARE 
-// userSchema.pre('find', function(next) {
-userSchema.pre(/^find/, function(next) {
-  this.find({ secretUser: { $ne: true }})
-  next()
-})
-
-
-// AGGREGATION MIDDLEWARE
-userSchema.pre('aggregate', function(next) { 
-  console.log(this.pipeline().unshift({ $match: {secretUser: {$ne: true}} }))
-  next()
-})
-const User = mongoose.model('user', userSchema)
-
-module.exports = User
+// CHECK VALIDATOR.JS FOR MORE ADVANCED VALIDATIONS
