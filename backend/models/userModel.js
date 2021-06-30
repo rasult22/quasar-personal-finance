@@ -52,13 +52,13 @@ userSchema.virtual('pseudoname').get(function () {
 // userSchema.pre('find', function(next) {
 userSchema.pre(/^find/, function(next) {
   this.find({ secretUser: { $ne: true }})
-  this.startTime = Date.now()
   next()
 })
 
-userSchema.post(/^find/, function(docs, next) {
-  console.log(Date.now() - this.startTime + 'ms')
-  console.log(docs);
+
+// AGGREGATION MIDDLEWARE
+userSchema.pre('aggregate', function(next) { 
+  console.log(this.pipeline().unshift({ $match: {secretUser: {$ne: true}} }))
   next()
 })
 const User = mongoose.model('user', userSchema)

@@ -136,6 +136,7 @@ exports.getUserStats = async (req, res) => {
     ])
     res.status(200).json({
       status: 'success',
+      count: stats.length,
       data: { stats }
     })
   } catch (error) {

@@ -49,3 +49,9 @@ userSchema.post('save', function (doc, next) {
   })
 
 
+
+// AGGREGATION MIDDLEWARE
+userSchema.pre('aggregate', function(next) { 
+  console.log(this.pipeline().unshift({ $match: {secretUser: {$ne: true}} }))
+  next()
+})
