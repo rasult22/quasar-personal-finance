@@ -5,6 +5,7 @@
     "main": "server.js",
     "scripts": {
         "start": "nodemon server",
+        "debug": "ndb server.js",
         "start:prod": "NODE_ENV=production nodemon server"
     },
     "author": "Turganov Rassulzhan",
