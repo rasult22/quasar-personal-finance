@@ -71,3 +71,8 @@ const userSchema = new mongoose.Schema({
 
 
 // CHECK VALIDATOR.JS FOR MORE ADVANCED VALIDATIONS
+// const validator = require('validator')
+// validate: {
+    //   validator: validator.isAlpha,
+    //   message: 'This field gotta only contain alphabetic characters'
+    // }

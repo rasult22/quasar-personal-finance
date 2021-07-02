@@ -1,5 +1,4 @@
 const mongoose= require('mongoose')
-const slugify = require('slugify')
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -8,7 +7,11 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     maxlength: [40, 'A username must have less or equal to 40 characters'],
-    minlength: [2, 'A username must have more or equal to 2 characters']
+    minlength: [2, 'A username must have more or equal to 2 characters'],
+    // validate: {
+    //   validator: hey.isAlpha,
+    //   message: 'This field gotta only contain alphabetic characters'
+    // }
   },
   slug: String,
   balance: { // ?????????????????
