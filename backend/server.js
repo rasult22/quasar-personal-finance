@@ -41,6 +41,13 @@ mongoose.connect(DB, {
 app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Cannot find ${req.originalUrl} on this server`
+  })
+})
+
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log('Server started on:', PORT)
