@@ -42,9 +42,20 @@ app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 
 app.all('*', (req, res, next) => {
-  res.status(404).json({
-    status: 'fail',
-    message: `Cannot find ${req.originalUrl} on this server`
+  const err = new Error(`Cannot find ${req.originalUrl} on this server`)
+  err.status = 'fail';
+  err.statusCode = 404;
+
+
+  next(err)
+})
+
+app.use((error, req, res, next) => {
+  error.statusCode = error.statusCode || 500;
+  error.status = error.status || 'error'
+  res.status(error.statusCode).json({
+    status: error.status,
+    message: error.message
   })
 })
 
