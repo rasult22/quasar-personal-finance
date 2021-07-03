@@ -1,6 +1,13 @@
 const User = require('../models/userModel')
 const APIFeatures = require('../utils/apiFeatures')
 
+const catchAsync = fn => {
+  return (req,res, next) => {
+    fn(req, res, next).catch(next)
+  }
+}
+
+
 exports.aliasTopUsers = (req, res, next) => {
   req.query.limit = '3'
   req.query.sort = '-rating'
@@ -8,7 +15,7 @@ exports.aliasTopUsers = (req, res, next) => {
   next()
 }
  
-exports.createUser = async (req, res) => {
+exports.createUser = catchAsync(async (req, res, next) => {
 
   try {
     const newUser = await User.create(req.body)
@@ -25,7 +32,7 @@ exports.createUser = async (req, res) => {
       message: err
     })
   }
-}
+})
 exports.updateUser = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -204,3 +211,6 @@ exports.getMonthlyPlan = async (req, res) => {
     })
   }
 }
+
+
+
