@@ -3,8 +3,10 @@ const mongoose = require('mongoose')
 
 const morgan = require('morgan')
 const path = require('path')
+const AppError = require('./utils/appError')
 const app = express()
 const dotenv = require('dotenv')
+const globalErrorHandler = require('./controllers/error')
 
 // Environment variables
 dotenv.config({path: './config.env'})
@@ -42,22 +44,10 @@ app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 
 app.all('*', (req, res, next) => {
-  const err = new Error(`Cannot find ${req.originalUrl} on this server`)
-  err.status = 'fail';
-  err.statusCode = 404;
-
-
-  next(err)
+  next(new AppError(`Cannot find ${req.originalUrl} on this server`, 404))
 })
 
-app.use((error, req, res, next) => {
-  error.statusCode = error.statusCode || 500;
-  error.status = error.status || 'error'
-  res.status(error.statusCode).json({
-    status: error.status,
-    message: error.message
-  })
-})
+app.use(globalErrorHandler)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
