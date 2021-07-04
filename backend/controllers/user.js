@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const APIFeatures = require('../utils/apiFeatures')
+const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
 
@@ -25,6 +26,10 @@ exports.updateUser = catchAsync(async (req, res, next) => {
       new: true,
       runValidators: true
     })
+    
+    if(!user) {
+      return next(new AppError('User not found', 404))
+    }
 
     res.status(200).json({
       status: 'success',
@@ -33,6 +38,10 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 })
 exports.deleteUser = catchAsync(async (req, res, next) => {
     const user = await User.findByIdAndDelete(req.params.id)
+    
+    if(!user) {
+      return next(new AppError('User not found', 404))
+    }
 
     res.status(204).json({
       status: 'success',
@@ -58,6 +67,10 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 
 exports.getUserById = catchAsync(async (req, res, next) => {
     const user = await User.findById(req.params.id)
+
+    if(!user) {
+      return next(new AppError('User not found', 404))
+    }
 
     res.status(200).json({
       status: 'success',
