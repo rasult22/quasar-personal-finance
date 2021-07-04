@@ -1,11 +1,6 @@
 const User = require('../models/userModel')
 const APIFeatures = require('../utils/apiFeatures')
-
-const catchAsync = fn => {
-  return (req,res, next) => {
-    fn(req, res, next).catch(next)
-  }
-}
+const catchAsync = require('../utils/catchAsync')
 
 
 exports.aliasTopUsers = (req, res, next) => {
@@ -16,25 +11,16 @@ exports.aliasTopUsers = (req, res, next) => {
 }
  
 exports.createUser = catchAsync(async (req, res, next) => {
-
-  try {
     const newUser = await User.create(req.body)
   
     res.status(201).json({
       status: 'success',
       data: { 
         user: newUser
-      }
-    })    
-  } catch (err) {
-    res.status(400).json({
-      status: 'error',
-      message: err
+      } 
     })
-  }
 })
-exports.updateUser = async (req, res) => {
-  try {
+exports.updateUser = catchAsync(async (req, res, next) => {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
@@ -44,32 +30,17 @@ exports.updateUser = async (req, res) => {
       status: 'success',
       data: { user }
     })
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    })
-  }
-}
-exports.deleteUser = async (req, res) => {
-  try {
+})
+exports.deleteUser = catchAsync(async (req, res, next) => {
     const user = await User.findByIdAndDelete(req.params.id)
 
     res.status(204).json({
       status: 'success',
       data: null
     })
+})
 
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    })
-  }
-}
-
-exports.getUsers = async (req, res) => {
-  try {
+exports.getUsers = catchAsync(async (req, res, next) => {
     const features = new APIFeatures(User.find(), req.query)
       .filter()
       .sort()
@@ -83,34 +54,18 @@ exports.getUsers = async (req, res) => {
       results: users.length,
       data: { users}
     })
+})
 
-  } catch (err) {
-    console.log(err)
-    res.status(400).json({
-      status: 'fail',
-      message: err?.message || err
-    })
-  }
-}
-
-exports.getUserById = async (req, res) => {
-  try {
+exports.getUserById = catchAsync(async (req, res, next) => {
     const user = await User.findById(req.params.id)
 
     res.status(200).json({
       status: 'success',
       data: { user }
     })
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    })
-  }
-}
+})
 
-exports.getUserStats = async (req, res) => {
-  try {
+exports.getUserStats = catchAsync( async (req, res, next) => {
     const stats = await User.aggregate([
       {
         $match: {
@@ -146,16 +101,9 @@ exports.getUserStats = async (req, res) => {
       count: stats.length,
       data: { stats }
     })
-  } catch (error) {
-    res.status(404).json({
-      status: 'fail',
-      message: error
-    })
-  }
-}
+})
 
-exports.getMonthlyPlan = async (req, res) => {
-  try {
+exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
     const year = req.params.year * 1;
     const plan = User.aggregate([
       { 
@@ -204,13 +152,7 @@ exports.getMonthlyPlan = async (req, res) => {
       status: 'success',
       data: { plan }
     })
-  } catch (error) {
-    res.status(404).json({
-      status: 'fail',
-      message: error
-    })
-  }
-}
+})
 
 
 
