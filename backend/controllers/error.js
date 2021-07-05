@@ -3,7 +3,12 @@ const AppError = require('../utils/appError')
 const handleCastErrorDB = (error) => {
   const message = `Invalid ${error.path}:${error.value}`
   return new AppError(message, 400)
-} 
+}
+const handleDuplicateFieldsDB = error => {
+  console.log(error)
+  const message = `Duplicate field value: "${error.keyValue.name}", please use another value`
+  return new AppError(message, 400)
+}
 const sendErrorDev = (error, res) => {
   res.status(error.statusCode).json({
     status: error.status,
@@ -41,9 +46,10 @@ module.exports = (error, req, res, next) => {
     sendErrorDev(error, res)
   } else {
     let errorClone = JSON.parse(JSON.stringify(error))
-    if(error.name === 'CastError') {
+    if(errorClone.name === 'CastError') {
       errorClone = handleCastErrorDB(errorClone)
     }
+    if(errorClone.code === 11000) errorClone = handleDuplicateFieldsDB(errorClone)
 
     sendErrorProd(errorClone, res)
   }
