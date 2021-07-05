@@ -8,6 +8,8 @@ const app = express()
 const dotenv = require('dotenv')
 const globalErrorHandler = require('./controllers/error')
 
+errorHandlersFallback()
+
 // Environment variables
 dotenv.config({path: './config.env'})
 
@@ -54,10 +56,19 @@ const server = app.listen(PORT, () => {
   console.log('Server started on:', PORT)
 })
 
-process.on('unhandledRejection', error => {
-  console.error(error.name, error.message);
-  console.error('Unhandled rejection! Shutting down an application...')
-  server.close(()=> {
+
+function errorHandlersFallback() {
+  process.on('unhandledRejection', error => {
+    console.error(error.name, error.message);
+    console.error('Unhandled rejection! Shutting down an application...')
+    server.close(()=> {
+      process.exit(1)
+    })
+  })
+  
+  process.on('uncaughtException', error => {
+    console.error(error.name, error.message);
+    console.error('UNCAUGHT EXCEPTION! Shutting down an application...')
     process.exit(1)
   })
-})
+}
