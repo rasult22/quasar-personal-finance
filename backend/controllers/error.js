@@ -5,10 +5,15 @@ const handleCastErrorDB = (error) => {
   return new AppError(message, 400)
 }
 const handleDuplicateFieldsDB = error => {
-  console.log(error)
   const message = `Duplicate field value: "${error.keyValue.name}", please use another value`
   return new AppError(message, 400)
 }
+const handleValidationErrorDB = error => {
+  const errors = Object.values(error.errors).map(item => item.message)
+  const message = `Invalid input data: ${errors.join('. ')}`
+  return new AppError(message, 400)
+}
+
 const sendErrorDev = (error, res) => {
   res.status(error.statusCode).json({
     status: error.status,
@@ -50,6 +55,7 @@ module.exports = (error, req, res, next) => {
       errorClone = handleCastErrorDB(errorClone)
     }
     if(errorClone.code === 11000) errorClone = handleDuplicateFieldsDB(errorClone)
+    if(errorClone.name === 'ValidationError') errorClone = handleValidationErrorDB(errorClone)
 
     sendErrorProd(errorClone, res)
   }
