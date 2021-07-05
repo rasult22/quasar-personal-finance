@@ -50,6 +50,14 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler)
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log('Server started on:', PORT)
+})
+
+process.on('unhandledRejection', error => {
+  console.error(error.name, error.message);
+  console.error('Unhandled rejection! Shutting down an application...')
+  server.close(()=> {
+    process.exit(1)
+  })
 })
