@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { createUser, updateUser, deleteUser, getUsers, getUserById, aliasTopUsers, getUserStats, getMonthlyPlan } = require('../../../controllers/user')
-
+const auth = require('../../../controllers/auth')
 // users statistics
 router.get('/userStats', getUserStats)
 
@@ -18,6 +18,9 @@ router.get('/:id', getUserById)
 
 // Post single user
 router.post('/', createUser)
+
+// Signing Up
+router.post('/signup', auth.signup)
 
 // Patch request example 
 router.patch('/:id', updateUser)

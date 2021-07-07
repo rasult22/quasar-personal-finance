@@ -1,88 +1,68 @@
 const mongoose= require('mongoose')
+const bcrypt = require('bcryptjs')
+// name, email, photo, password, passwordConfirm
+
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'A user must have name'],
+    required: [true, 'a user must have a name'],
     unique: true,
     trim: true,
-    maxlength: [40, 'A username must have less or equal to 40 characters'],
-    minlength: [2, 'A username must have more or equal to 2 characters'],
-    // validate: {
-    //   validator: hey.isAlpha,
-    //   message: 'This field gotta only contain alphabetic characters'
-    // }
+    minlength: [2, 'A username must have more than or equal to 2 characters']
   },
-  slug: String,
-  balance: { // ?????????????????
-    type: Number,
-    required: [true, 'A user must have a balance']
-  },
-  rating: {
-    type: Number,
-    default: 3.0,
-    min: [1,' Rating must be above 1.0'],
-    max: [5, 'Rating must be below 5.0']
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now()
-  },
-  rang: {
+  email: {
     type: String,
-    required: [true, 'A user must have a rang'],
+    required: [true, 'a user must have an email adress'],
+    trim: true,
+    unique: true,
+    lowercase: true,
     validate: {
-      message: 'A user with a {VALUE} rang cannot have a rating less that 4.0',
+      message: 'Invalid email address. The format should be: test@test.anything',
       validator: function (value) {
-        if (value === 'Hokage') return this.rating > 4.0
-        return true
+        let regex = /^[^\s@]+@[^\s@]+$/
+        return regex.test(value)
       }
-    },
-    enum:{ 
-        values: ['Genin', 'Chounin', 'Zhounin', 'Sanin', 'Hokage'],
-        message: 'Rang is either: Genin, Chounin, Zhounin, Sanin, Hokage' 
-      }
+    }
   },
-  secretUser: {
-    type: Boolean,
-    default: false
+  avatar: {
+    type: String
+  },
+  password: {
+    type: String,
+    required: [true, 'A password cannot be an empty string'],
+    minlength: [8, 'A password length must be more than or equal to 8'],
+    validate: {
+      message: 'Invalid password. A password must contain at least one number, and may contain only the following symbols: from a to z and !@#$%&*()_=[]{}:;"\\|,.',
+      validator: function (value) {
+        const regex = /[^a-z0-9`!@#$%&*()_=[\]{}:;"\\|,.]/gi // whitelist
+        return !regex.test(value) && /[^A-z]/gi.test(value) && /[^0-9]/gi.test(value) // test if symbols in whitelist and contain numbers and letters at the same time 
+      }
+    }
+  },
+  passwordConfirm: {
+    type: String,
+    required: true,
+    validate: {
+      message: 'Invalid password confirmation. Passwords aren\'t the same',
+      validator: function (value) {
+        return value === this.password
+      }
+    }
   }
-  // images: [String]  array of strings
-  // accounts:[
-  //   {
-  //     type: 'bank'
-  //   },
-  //   {
-  //     type: 'cash'
-  //   {
-  //     type: 'crypto'
-  //   }
-  // ],
-  
-
-}, {
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
 })
 
-// Virtual Property
-userSchema.virtual('pseudoname').get(function () {
-  return this.rating > 4 ? 'TIGER' : 'CAT'
-})
+userSchema.pre('save', async function(next) {
+  // Only run this function if password was actually modified
+  if(!this.isModified('password')) return next()
 
-// QUERY MIDDLEWARE 
-// userSchema.pre('find', function(next) {
-userSchema.pre(/^find/, function(next) {
-  this.find({ secretUser: { $ne: true }})
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12)
+
+  this.passwordConfirm = undefined
   next()
 })
 
-
-// AGGREGATION MIDDLEWARE
-userSchema.pre('aggregate', function(next) { 
-  console.log(this.pipeline().unshift({ $match: {secretUser: {$ne: true}} }))
-  next()
-})
 const User = mongoose.model('user', userSchema)
 
 module.exports = User
