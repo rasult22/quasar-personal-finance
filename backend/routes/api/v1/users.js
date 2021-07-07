@@ -22,6 +22,8 @@ router.post('/', createUser)
 // Signing Up
 router.post('/signup', auth.signup)
 
+router.post('/login', auth.login)
+
 // Patch request example 
 router.patch('/:id', updateUser)
 

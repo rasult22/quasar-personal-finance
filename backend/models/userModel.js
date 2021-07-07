@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A password cannot be an empty string'],
     minlength: [8, 'A password length must be more than or equal to 8'],
+    select: false,
     validate: {
       message: 'Invalid password. A password must contain at least one number, and may contain only the following symbols: from a to z and !@#$%&*()_=[]{}:;"\\|,.',
       validator: function (value) {
@@ -62,6 +63,10 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined
   next()
 })
+
+userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
+  return await bcrypt.compare(candidatePassword, userPassword)
+}
 
 const User = mongoose.model('user', userSchema)
 
