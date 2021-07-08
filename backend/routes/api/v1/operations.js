@@ -21,6 +21,8 @@ router.patch('/:id', updateOperation)
 
 // DELETE request example
 
-router.delete('/:id', deleteOperation)
+router.delete('/:id', auth.protect, auth.restrictTo('admin'), deleteOperation)
 
 module.exports = router
+
+//

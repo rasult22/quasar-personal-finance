@@ -17,7 +17,7 @@ router.get('/', getUsers)
 router.get('/:id', getUserById)
 
 // Post single user
-router.post('/', createUser)
+router.post('/very-secret-route-for-creating-admin-roles', createUser)
 
 // Signing Up
 router.post('/signup', auth.signup)

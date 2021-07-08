@@ -28,6 +28,11 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
+  role: {
+    type: String,
+    enum: ['user', 'premium-user', 'admin'],
+    default: 'user'
+  },
   password: {
     type: String,
     required: [true, 'A password cannot be an empty string'],
@@ -50,7 +55,8 @@ const userSchema = new mongoose.Schema({
         return value === this.password
       }
     }
-  }
+  },
+  passwordChangedAt: Date
 })
 
 userSchema.pre('save', async function(next) {
@@ -66,6 +72,14 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword, userPassword)
+}
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  console.log(this.passwordChangedAt)
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10)
+    return changedTimestamp > JWTTimestamp
+  }
+  return false
 }
 
 const User = mongoose.model('user', userSchema)
