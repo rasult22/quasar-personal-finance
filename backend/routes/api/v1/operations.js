@@ -2,10 +2,10 @@
 const express = require('express')
 const router = express.Router()
 const { createOperation, updateOperation, deleteOperation, getOperations, getOperationById } = require('../../../controllers/operation')
-
+const auth = require('../../../controllers/auth')
 
 // Fetch all the operations
-router.get('/', getOperations)
+router.get('/', auth.protect, getOperations)
 
 // GET single operation by ID
 router.get('/:id', getOperationById)

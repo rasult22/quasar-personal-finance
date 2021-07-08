@@ -1,10 +1,11 @@
 const User = require('../models/userModel')
+const { promisify } = require('util')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 const jwt =  require('jsonwebtoken')
 
 const signToken = (id) => {
-  return jwt.sign({ id}, process.env.JWT_SECRET, {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN
   })
 }
@@ -44,4 +45,23 @@ exports.login = catchAsync(async (req, res, next) => {
     status: 'success',
     token
   })
+})
+
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+  // 1) Getting token and check if it's therefore
+  if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+    token = req.headers.authorization.split(' ')[1]
+  }
+  console.log(token, req.headers)
+  if(!token) {
+    return next(new AppError('You aren\'t logged in. Please log in to get access', 401))
+  }
+  // 2) Verification token
+  const decoded =  await promisify(jwt.verify(token, process.env.JWT_SECRET));
+  // 3) Check if user still exists
+
+  // 4) Check if user changed password after the JWT was issued
+
+  next()
 })

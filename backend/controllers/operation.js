@@ -1,26 +1,18 @@
 const Operation = require('../models/operationModel')
-
+const APIFeatures = require('../utils/apiFeatures')
+const AppError = require('../utils/appError')
+const catchAsync = require('../utils/catchAsync')
  
-exports.createOperation = async (req, res) => {
-
-  try {
+exports.createOperation = catchAsync(async (req, res) => {
     const newOperation = await Operation.create(req.body)
-  
     res.status(201).json({
       status: 'success',
       data: { 
         operation: newOperation
       }
     })    
-  } catch (err) {
-    res.status(400).json({
-      status: 'error',
-      message: err
-    })
-  }
-}
-exports.updateOperation = async (req, res) => {
-  try {
+})
+exports.updateOperation =  catchAsync(async (req, res) => {
     const operation = await Operation.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
@@ -30,60 +22,33 @@ exports.updateOperation = async (req, res) => {
       status: 'success',
       data: { operation }
     })
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    })
-  }
-}
-exports.deleteOperation = async (req, res) => {
-  try {
+})
+exports.deleteOperation =  catchAsync(async (req, res) => {
     const operation = await Operation.findByIdAndDelete(req.params.id)
 
     res.status(204).json({
       status: 'success',
       data: null
     })
+})
 
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    })
-  }
-}
-
-exports.getOperations = async (req, res) => {
-  try {
-    const operations = await Operation.find()
-
+exports.getOperations =  catchAsync(async (req, res) => {
+    
+    const features = new APIFeatures(Operation.find(), req.query)
+    .limitFields()
+    const operations = await features.mongoQuery
     res.status(200).json({
       status: 'success',
       results: operations.length,
       data: { operations }
-    })
+    })  
+})
 
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    })
-  }
-}
-
-exports.getOperationById = async (req, res) => {
-  try {
+exports.getOperationById =  catchAsync(async (req, res) => {
     const operation = await Operation.findById(req.params.id)
 
     res.status(200).json({
       status: 'success',
       data: { operation }
-    })
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err
-    })
-  }
-}
+    }) 
+})

@@ -10,13 +10,11 @@ const operationSchema = new mongoose.Schema({
     required: [true, 'an operation must have a value']
   },
   category: {
-
     type: String,
     required: [true, 'an operation must have a category'],
   },
   comments: {
-    type: String,
-    
+    type: String,  
     default: '-',
     trim: true
   },

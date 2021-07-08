@@ -13,6 +13,9 @@ const handleValidationErrorDB = error => {
   const message = `Invalid input data: ${errors.join('. ')}`
   return new AppError(message, 400)
 }
+const handleJWTError = error => {
+  
+}
 
 const sendErrorDev = (error, res) => {
   res.status(error.statusCode).json({
@@ -56,6 +59,8 @@ module.exports = (error, req, res, next) => {
     }
     if(errorClone.code === 11000) errorClone = handleDuplicateFieldsDB(errorClone)
     if(errorClone.name === 'ValidationError') errorClone = handleValidationErrorDB(errorClone)
+
+    if(errorClone.name === 'JsonWebTokenError') errorClone = handleJWTError(errorClone)
 
     sendErrorProd(errorClone, res)
   }
