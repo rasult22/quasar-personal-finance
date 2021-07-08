@@ -1,5 +1,6 @@
 const mongoose= require('mongoose')
 const bcrypt = require('bcryptjs')
+const crypto = require('crypto')
 // name, email, photo, password, passwordConfirm
 
 
@@ -56,7 +57,9 @@ const userSchema = new mongoose.Schema({
       }
     }
   },
-  passwordChangedAt: Date
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date
 })
 
 userSchema.pre('save', async function(next) {
@@ -72,6 +75,23 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword, userPassword)
+}
+userSchema.methods.createPasswordResetToken = function () {
+  // decrypted
+  const resetToken = crypto
+    .randomBytes(32)
+    .toString('hex')
+  
+  // hold in db encrypted
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+
+  // Expire time
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000
+
+  return resetToken
 }
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   console.log(this.passwordChangedAt)
