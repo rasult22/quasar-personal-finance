@@ -1,0 +1,54 @@
+// Flex
+.flex { display: flex; flex: initial !important; }
+
+.f {
+  // Wrap
+  &w { flex-wrap: wrap; }
+
+  // Direction
+  &d {
+    &c { flex-direction: column; }
+    &r { flex-direction: row; }
+  }
+}
+
+// Align item
+.ai {
+  &fs { align-items: flex-start; }
+  &c { align-items: center; }
+  &fe { align-items: flex-end; }
+}
+
+// Align self
+.as {
+  &fs { align-self: flex-start; }
+  &c { align-self: center; }
+  &fe { align-self: flex-end; }
+}
+
+// Justify content
+.jc {
+  &fs { justify-content: flex-start; }
+  &c { justify-content: center; }
+  &sb { justify-content: space-between; }
+  &fe { justify-content: flex-end; }
+}
+
+// Gaps
+.ggap {
+  &05 { grid-gap: 5px; }
+  @for $i from 1 through 5 {
+    &#{1 * $i} { grid-gap: 10px * $i; }
+  }
+}
+
+// Grid
+.grid { display: grid; }
+.gtc {
+  &auto1 { grid-template-columns: auto 1fr; }
+  &1auto { grid-template-columns: 1fr auto; }
+  &auto { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+  @for $i from 2 through 5 {
+    &#{1 * $i} { grid-template-columns: repeat((1 * $i), 1fr); }
+  }
+}

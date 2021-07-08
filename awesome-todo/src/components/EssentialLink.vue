@@ -3,7 +3,7 @@
     clickable
     tag="a"
     :href="link"
-    class="bg-green"
+    class="bg-green jcc"
   >
     <q-item-section
       v-if="icon"
@@ -12,11 +12,8 @@
       <q-icon :name="icon" />
     </q-item-section>
 
-    <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>
-        {{ caption }}
-      </q-item-label>
+    <q-item-section class="show-on-desktop">
+      <q-item-label >{{ title }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
