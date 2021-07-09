@@ -2,7 +2,7 @@
   <q-item
     clickable
     tag="a"
-    :href="link"
+    @click="$router.push(link)"
     class="bg-green jcc"
   >
     <q-item-section
