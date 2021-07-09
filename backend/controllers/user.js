@@ -12,6 +12,9 @@ const filterObj = (obj, propWhiteList) => {
   })
   return newObj
 }
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await USer.findByIdAndUpdate(req.user.id)
+})
 
 exports.updateMe = catchAsync(async (req,res, next) => {
   // 1) Create error if user POSTs password data
@@ -21,7 +24,7 @@ exports.updateMe = catchAsync(async (req,res, next) => {
 
   // 2) Update user document
   const filteredBody = filterObj(req.body, ['name', 'email'])
-   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, { 
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
      new: true,
      runValidation: true
   })
