@@ -34,6 +34,9 @@ router.patch('/updateMyPassword', auth.protect, auth.updatePassword)
 // Update user data (by user himself)
 router.patch('/updateMe', auth.protect, updateMe)
 
+// Delete user data (by user himself)
+router.delete('/deleteMe', auth.protect, deleteMe)
+
 // Patch request example 
 router.patch('/:id', updateUser)
 
