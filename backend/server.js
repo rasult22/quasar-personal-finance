@@ -23,7 +23,7 @@ app.use(express.static(`${__dirname}/public`))
 app.use(express.urlencoded({ extended: false }))
 
 // local DB
-// const localDB = process.env.DATABASE_LOCAL
+// const DB = process.env.DATABASE_LOCAL
 
 // cloud DB
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD)

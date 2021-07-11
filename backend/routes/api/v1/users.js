@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { updateMe, createUser, updateUser, deleteUser, getUsers, getUserById, aliasTopUsers, getUserStats, getMonthlyPlan } = require('../../../controllers/user')
+const { deleteMe, updateMe, createUser, updateUser, deleteUser, getUsers, getUserById, aliasTopUsers, getUserStats, getMonthlyPlan } = require('../../../controllers/user')
 const auth = require('../../../controllers/auth')
 // users statistics
 router.get('/userStats', getUserStats)
