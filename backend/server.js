@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const rateLimit = require('express-rate-limit')
+const helmet = require('helmet')
 const morgan = require('morgan')
 const path = require('path')
 const AppError = require('./utils/appError')
@@ -8,6 +9,7 @@ const app = express()
 const dotenv = require('dotenv')
 const globalErrorHandler = require('./controllers/error')
 
+// handling edge cases
 errorHandlersFallback()
 
 // Environment variables
@@ -17,18 +19,25 @@ dotenv.config({path: './config.env'})
 if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
+// allow using json in response
 app.use(express.json())
+
+// serving static files
 app.use(express.static(`${__dirname}/public`))
 
+// parsing incoming requests with urlencoded payloads 
 app.use(express.urlencoded({ extended: false }))
 
+// Limit requests from same API
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again in an hour' 
 })
-
 app.use('/api', limiter)
+
+// set security HTTP headers
+app.use(helmet())
 
 // local DB
 // const DB = process.env.DATABASE_LOCAL
@@ -50,10 +59,12 @@ mongoose.connect(DB, {
 app.use('/api/v1/operations', require('./routes/api/v1/operations'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 
+// handle 404 
 app.all('*', (req, res, next) => {
   next(new AppError(`Cannot find ${req.originalUrl} on this server`, 404))
 })
 
+// Centralized global express error handler
 app.use(globalErrorHandler)
 
 const PORT = process.env.PORT || 5000
