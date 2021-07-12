@@ -15,12 +15,14 @@ errorHandlersFallback()
 // Environment variables
 dotenv.config({path: './config.env'})
 
-// Middleware for letting client poss data
+// Development logging
 if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
-// allow using json in response
-app.use(express.json())
+// Body parser, reading data from body into req.body
+app.use(express.json(), {
+  limit: '10kb'
+})
 
 // serving static files
 app.use(express.static(`${__dirname}/public`))
