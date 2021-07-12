@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-
+const rateLimit = require('express-rate-limit')
 const morgan = require('morgan')
 const path = require('path')
 const AppError = require('./utils/appError')
@@ -21,6 +21,14 @@ app.use(express.json())
 app.use(express.static(`${__dirname}/public`))
 
 app.use(express.urlencoded({ extended: false }))
+
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour' 
+})
+
+app.use('/api', limiter)
 
 // local DB
 // const DB = process.env.DATABASE_LOCAL
