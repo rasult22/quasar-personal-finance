@@ -41,7 +41,14 @@ export default {
   data() {
     return {
     }
+  },
+  watch: {
+    operations(val){
+      console.log(val)
+
+    }
   }
+
 }
 </script>
 <style lang="scss" scoped>
