@@ -1,0 +1,62 @@
+
+
+USERS
+
+
+
+
+
+
+TRANSACTIONS
+
+
+
+
+
+
+TRANSACTION CATEGORIES
+
+
+
+
+
+CURRENCIES
+
+
+
+
+
+WALLETS
+
+
+
+
+
+BUDGET
+
+
+
+
+    p      c
+USER ----->  TRANSACTIONS
+    1:MANY 
+    Parent referencing
+
+
+USER ----> TRANSACTION CATEGORIES
+     1:MANY
+    
+USER -----> WALLETS
+     1:FEW
+
+
+TRANSACTION 
+CATEGORY   -------> TRANSACTIONS
+            1:MANY
+
+
+CURRENCY -------> WALLETS
+          1:FEW
+
+
+
