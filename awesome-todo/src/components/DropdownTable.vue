@@ -6,11 +6,11 @@
               <q-avatar class="q-avatar table-card__icon--avatar" icon="bookmark" color="red" text-color="white" />
               {{ type }}
                </div>
-            <div class="table-card__icon--side"> <q-icon name="expand_more"/>  </div>
+            <div @click="toggleExpand" class="table-card__icon-side" :class="{'table-card__icon-side--close': !opened}" > <q-icon name="expand_more"/>  </div>
           </q-card-section>
       </div>
-      <div class="dropdown-table-cards">
-        <div v-for="operation in operations" :key="operation">
+      <div v-if="opened" class="dropdown-table-cards">
+        <div v-for="operation in operations" :key="operation.date + operation.comments + Math.random()">
           <q-card-section class="table-card">
             <div class="table-card__icon-container">
               <div class="table-card__icon"> 
@@ -31,29 +31,6 @@
           </q-card-section>
         </div>
       </div>
-      
-      <!-- <q-markup-table flat bordered>
-        <thead class="bg-blue-1">
-          <tr >
-            <th class="text-left">Cash</th>
-            <th class="text-left">Operation type</th>
-            <th class="text-left ">Comments</th>
-            <th class="text-left">Category</th>
-            <th class="text-left">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="operation in operations" 
-          :key="operation.date + operation.amount + operation.comments" 
-          >
-            <td class="text-left">{{operation.postType === 'income' ? '+' : '-'}} {{`${operation.amount} ${operation.currency}`}}</td>
-            <td class="text-left">{{ operation.postType}}</td>
-            <td :class="{'tr-expense': operation.postType === 'expense', 'tr-income' :operation.postType === 'income'}" class="text-left">{{operation.comments}}</td>
-            <td class="text-left">{{operation.category}}</td>
-            <td class="text-left">{{ operation.date }}</td>
-          </tr>
-        </tbody>
-      </q-markup-table> -->
     </div>
 </template>
 
@@ -79,12 +56,20 @@ props: {
     default: () => 'No operation type'
   }
 },
+data() {
+  return {
+    opened: false
+  }
+},
 computed: {
   // isn 
 },
 methods: {
   isIncome(operation) {
     return operation.postType === 'income'
+  },
+  toggleExpand () {
+    this.opened = !this.opened
   }
 }
 }
@@ -107,10 +92,6 @@ methods: {
     display: flex;
     width: 100%;
     &__icon {
-      // min-width: ;
-      // flex-shrink: 0;
-      // width: 100%;
-      // height: 100%;
       background-color:rgba(23,34,0,0.1);
       display: flex;
       align-items: center;
@@ -129,8 +110,19 @@ methods: {
         color: peru;
       }
 
-      &--side {
+      &-side {
         margin-left: auto;
+        cursor: pointer;
+        font-size: 1.2rem;
+        i {
+          transition: all .1s ease-in-out;
+        }
+        &--close {
+          i {
+            transition: all .1s ease-in-out;
+            transform:rotate(-90deg);
+          }
+        }
       }
       &--avatar {
         margin-right: 12px;
