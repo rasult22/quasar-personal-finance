@@ -48,9 +48,22 @@ Steps:
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 4. Types of referencing:
-   a) CHILD REFERENCING
-   b) PARENT REFERENCING
-   c) TWO-WAY REFERENCING
+   a) CHILD REFERENCING - we keep references to the related child documents in a parent document (usually stored in an array)   -- ONE TO FEW
+   b) PARENT REFERENCING - in each child document we keep a reference to the parent element    -------       ONE TO MANY,  ONE TO TON
+   c) TWO-WAY REFERENCING -    stuffs are connected in both directions            ----- MANY TO MANY
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+                                                                            SUMMARY
+****************************************************************************************************************************************************************************************************
+**************************************** STRUCTURE YOUR DATA TO MATCH THE WAYS THAT YOUR APPLICATION QUERIES AND UPDATES DATA **********************************************************************
+********* IDETIFY THE QUESTIONS THAT ARISE FROM YOUR APPLICATION'S USE CASES FIRST, AND THEN MODEL YOUR DATA SO THAT THE QUESTIONS CAN GET ANSWERED IN THE MOST EFFICIENT WAY **********************
+***************************** ALWAYS FAVOR EMBEDDING, UNLESS THERE'S A GOOD REASON NOT TO EMBED. ESPECIALLY ON 1:FEW AND 1:MANY RELATIONSHIPS*******************************************************
+************************************ A 1:TON OR A MANY:MANY RELATIONSHIPS IS USUALLY A GOOD REASON TO REFERENCE INSTEAD OF EMBEDDING ***************************************************************
+**************************** USE EMBEDDING WHEN DATA IS MOSTLY READ BUT RARELY UPDATED, AND WHEN TWO DATASETS BELONG INTRINSICALLY TOGETHER ********************************************************
+******* DON'T ALLOW ARRAYS TO GROW INDEFINITELY. THEREFORE, IF YOU NEED TO NORMALIZE, USE CHILD REFERENCING FOR 1:MANY RELATIONSHIPS, AND PARENT REFERENCING FOR 1:TON RELATIONSHIPS ***************
+************************************************************** USE TWO-WAY REFERENCING FOR MANY:MANY RELATIONSHIPS *********************************************************************************
+****************************************************************************************************************************************************************************************************
 
 */
