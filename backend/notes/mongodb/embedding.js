@@ -1,7 +1,5 @@
-
-
-const User = {}
-const guides = ['343fddaads23', '2323sd2333sdae']
+const User = {};
+const guides = ['343fddaads23', '2323sd2333sdae'];
 
 // Front should pass only array of user IDs
 // Saving an guides object to a tour objects by user IDs (users with role guides) 
@@ -12,4 +10,4 @@ tourSchema.pre('save', async function(next) {
    this.guides = await Promise.all(guidesPromises)
 
    next()
-}})
+})
