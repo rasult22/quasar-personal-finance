@@ -39,7 +39,7 @@ BUDGET
 
     p      c
 USER ----->  TRANSACTIONS
-    1:MANY 
+    1:TON 
     Parent referencing
 
 
@@ -51,7 +51,7 @@ USER -----> WALLETS
 
 
 TRANSACTION 
-CATEGORY   -------> TRANSACTIONS
+CATEGORY   -------> TRANSACTIONS - Категория транзакции кстати может внутри себя не включать инфо о транзакциях
             1:MANY
 
 
