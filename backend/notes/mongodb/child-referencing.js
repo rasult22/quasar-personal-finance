@@ -16,4 +16,22 @@
 
 // Populating Tour Guides
 
-const tour = await Tour.findById(req.params.id).populate('guides')
+const tour = await Tour.findById(req.params.id).populate({
+  path: 'guides',
+  select: '-__v -passwordChangedAt'
+}
+  )
+
+
+
+// Avoid using the same code many times in the other endpoints
+// Write a document middleware instead: 
+
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChanged'
+  })
+
+  next()
+})
