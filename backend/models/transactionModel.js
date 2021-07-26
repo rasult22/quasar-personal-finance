@@ -43,6 +43,6 @@ const transactionSchema = new mongoose.Schema({
 })
 
 
-const Operation = mongoose.model('operation', operationSchema)
+const Transaction = mongoose.model('transaction', transactionSchema)
 
-module.exports = Operation
+module.exports = Transaction
