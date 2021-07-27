@@ -1,4 +1,4 @@
-// Operations List API
+// Transactions API
 const express = require('express')
 const router = express.Router()
 const { createOperation, updateOperation, deleteOperation, getOperations, getOperationById } = require('../../../controllers/operation')
