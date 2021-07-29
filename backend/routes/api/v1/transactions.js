@@ -4,14 +4,14 @@ const router = express.Router()
 const { createTransaction, updateTransaction, deleteTransaction, getTransactions, getTransactionById } = require('../../../controllers/transaction')
 const auth = require('../../../controllers/auth')
 
-// Fetch all the operations
+// Fetch all the transactions
 router.get('/', auth.protect, getTransactions)
 
-// GET single operation by ID
+// GET single transaction by ID
 router.get('/:id', getTransactionById)
 
 
-// POST single operation
+// POST single transaction
 router.post('/', createTransaction)
 
 

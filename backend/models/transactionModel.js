@@ -6,7 +6,9 @@ const transactionSchema = new mongoose.Schema({
     default: Date.now()
   },
   wallet: {
-    //
+    type: mongoose.Schema.ObjectId,
+    ref: 'Wallet',
+    required: [true, 'Transaction must have a wallet associated with it']
   },
   amount: {
     type: Number,
@@ -38,7 +40,8 @@ const transactionSchema = new mongoose.Schema({
 
   },
   currency: {
-    type: Object
+    type: Object,
+    required: [true, 'transaction must have a currency associated with it']
   }
 })
 
