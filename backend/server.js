@@ -77,6 +77,7 @@ mongoose.connect(DB, {
 app.use('/api/v1/transactions', require('./routes/api/v1/transactions'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 app.use('/api/v1/wallet', require('./routes/api/v1/wallet'))
+app.use('/api/v1/transaction-category', require('./routes/api/v1/transaction-category'))
 
 // handle 404 
 app.all('*', (req, res, next) => {
