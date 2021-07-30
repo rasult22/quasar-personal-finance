@@ -1,5 +1,3 @@
-// Transaction CATEGORY API
-
 const express = require('express')
 const router = express.Router()
 
@@ -8,3 +6,6 @@ const {create} = require('../../../controllers/transaction-category')
 
 
 router.post('/', auth.protect, create)
+
+
+module.exports = router;

@@ -19,5 +19,5 @@ const transactionCategorySchema = new mongoose.Schema({
 })
 
 
-const TransactionCategory = mongoose.model('transaction', transactionCategorySchema)
+const TransactionCategory = mongoose.model('transaction-category', transactionCategorySchema)
 module.exports = TransactionCategory
