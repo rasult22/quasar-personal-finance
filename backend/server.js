@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const rateLimit = require('express-rate-limit')
 const helmet = require('helmet')
+const cors = require('cors')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
@@ -39,6 +40,10 @@ app.use(hpp({
     // here I can whitelist some parameters
   ]
 }))
+app.use(cors({
+  origin: 'http://localhost:8080',
+  optionsSuccessStatus: 200
+}))
 
 // serving static files
 app.use(express.static(`${__dirname}/public`))
@@ -73,7 +78,7 @@ mongoose.connect(DB, {
 
 
 
-// Operations, Users API route
+// API routes
 app.use('/api/v1/transactions', require('./routes/api/v1/transactions'))
 app.use('/api/v1/users', require('./routes/api/v1/users'))
 app.use('/api/v1/wallet', require('./routes/api/v1/wallet'))

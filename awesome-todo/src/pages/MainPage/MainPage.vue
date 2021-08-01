@@ -42,6 +42,9 @@ export default {
     return {
     }
   },
+  created() {
+    this.$store.dispatch('mainPage/someAction')
+  },
   watch: {
     operations(val){
       console.log(val)

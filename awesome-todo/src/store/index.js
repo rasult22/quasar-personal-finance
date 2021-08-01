@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import axios from 'axios'
 import mainPage from './main-page/index'
 
 Vue.use(Vuex)
+axios.baseURL = 'http://127.0.0.1:5000/api/v1'
 
 /*
  * If not building with SSR mode, you can
