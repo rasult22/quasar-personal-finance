@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import mainPage from './main-page/index'
+import users from './users/index'
 
 Vue.use(Vuex)
-axios.baseURL = 'http://127.0.0.1:5000/api/v1'
+// axios.baseURL = 'http://127.0.0.1:5000/api/v1'
 
 /*
  * If not building with SSR mode, you can
@@ -18,7 +19,8 @@ axios.baseURL = 'http://127.0.0.1:5000/api/v1'
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      mainPage
+      mainPage,
+      users
     },
 
     // enable strict mode (adds overhead!)
