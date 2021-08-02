@@ -17,7 +17,7 @@ exports.createWallet = catchAsync(async (req, res) => {
 
 exports.getAll = catchAsync(async (req, res) => {
   const features = new APIFeatures(Wallet.find(), req.query)
-  .limitFields()
+  .filter()
   
   const wallets = await features.mongoQuery
 

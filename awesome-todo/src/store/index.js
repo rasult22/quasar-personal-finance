@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import mainPage from './main-page/index'
 import users from './users/index'
+import wallets from './wallets/index'
 
 Vue.use(Vuex)
 // axios.baseURL = 'http://127.0.0.1:5000/api/v1'
@@ -20,7 +21,8 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       mainPage,
-      users
+      users,
+      wallets
     },
 
     // enable strict mode (adds overhead!)

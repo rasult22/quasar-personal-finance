@@ -50,6 +50,9 @@ export default {
       token: process.env.TEST_USER_TOKEN,
       id: process.env.TEST_USER_ID
     })
+    this.$store.dispatch('wallets/getWallets', {
+      user: process.env.TEST_USER_ID
+    })
   },
   watch: {
     operations(val){
