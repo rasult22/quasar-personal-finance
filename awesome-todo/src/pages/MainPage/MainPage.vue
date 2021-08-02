@@ -12,10 +12,10 @@
         </div>
         <div></div>
       </q-card-section>
-      <q-card-section>
+      <!-- <q-card-section>
         <p class="color-red">Total Spending: - 36.999 ₸</p>
         <p class="color-green">Total Income: + 62.250 ₸</p>
-      </q-card-section>
+      </q-card-section> -->
     </q-card>
     <DropdownTable :operations="operations" />
     

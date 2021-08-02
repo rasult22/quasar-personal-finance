@@ -3,7 +3,8 @@
     clickable
     tag="a"
     @click="$router.push(link)"
-    class="bg-green jcc"
+    :style="`color: ${color}; background-color: ${bgColor};`"
+    class="jcc"
   >
     <q-item-section
       v-if="icon"
@@ -40,6 +41,14 @@ export default {
     icon: {
       type: String,
       default: ''
+    },
+    color: {
+      type: String,
+      default: 'black'
+    },
+    bgColor: {
+      type: String,
+      default: 'white'
     }
   }
 }

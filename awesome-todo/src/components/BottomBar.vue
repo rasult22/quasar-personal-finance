@@ -1,8 +1,9 @@
 <template>
-  <q-footer elevated class="bottom-bar bg-green text-white">
+  <q-footer elevated class="bottom-bar">
       <q-list class="flex justify-around">
         <EssentialLink
           class="bottom-bar__item"
+          color="#633fe8"
           v-for="link in barItems"
           :key="link.title"
           v-bind="link"
@@ -48,6 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$app-bottom-bar-text-color: #633fe8;
 
 .bottom-bar {
   &__item {

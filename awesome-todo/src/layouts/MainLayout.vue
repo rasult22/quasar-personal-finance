@@ -1,26 +1,23 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-green" elevated>
-      <q-toolbar>
-        <q-toolbar-title> {{this.$router.history.current.name}} </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-    <BottomBar class="show-on-mobile" />
-      
+
+    <Header :title="'Aqsha Tracker'"/>
 
     <q-page-container>
       <router-view />
     </q-page-container>
     
+    <BottomBar class="show-on-mobile" />
   </q-layout>
 </template>
 
 <script>
 import BottomBar from "components/BottomBar.vue"
+import Header from "components/Header.vue"
 
 export default {
   name: "MainLayout",
-  components: { BottomBar },
+  components: { BottomBar, Header },
   data() {
     return {
       leftDrawerOpen: false,
@@ -54,6 +51,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>
