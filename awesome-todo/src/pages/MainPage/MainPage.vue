@@ -3,6 +3,7 @@
     <q-card class="my-card">
       <q-card-section>
         <div>
+          <div class="text"> Username: {{user.name}}</div>
           <div class="text-h6">{{getAccount.name}}</div>
           <div class="text-subtitle2">Balance: {{getAccount.balance.toLocaleString('en-US')}} {{getAccount.currency}}</div>
         </div>
@@ -35,6 +36,7 @@ export default {
   computed: {
     ...mapGetters({
       getAccount: 'mainPage/getAccount',
+      user: 'users/getUser',
       operations: 'mainPage/getOperations'
     })
   },
@@ -44,6 +46,10 @@ export default {
   },
   created() {
     this.$store.dispatch('mainPage/someAction')
+    this.$store.dispatch('users/getUserById', {
+      token: process.env.TEST_USER_TOKEN,
+      id: process.env.TEST_USER_ID
+    })
   },
   watch: {
     operations(val){

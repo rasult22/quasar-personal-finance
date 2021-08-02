@@ -1,13 +1,13 @@
 <template>
     <div class="q-mt-md dropdown-table">
       <div class="dropdown-table__title">
-          <q-card-section class="table-card">
+          <div class="table-card">
                <div class="table-card__name-main">
               <q-avatar class="q-avatar table-card__icon--avatar" icon="bookmark" color="red" text-color="white" />
               {{ type }}
                </div>
             <div @click="toggleExpand" class="table-card__icon-side" :class="{'table-card__icon-side--close': !opened}" > <q-icon name="expand_more"/>  </div>
-          </q-card-section>
+          </div>
       </div>
       <div v-if="opened" class="dropdown-table-cards">
         <div v-for="operation in operations" :key="operation.date + operation.comments + Math.random()">
@@ -91,6 +91,7 @@ methods: {
   .table-card {
     display: flex;
     width: 100%;
+    padding: 10px 10px;
     &__icon {
       background-color:rgba(23,34,0,0.1);
       display: flex;
