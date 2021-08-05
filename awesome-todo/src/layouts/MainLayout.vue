@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
 
-    <Header :title="'Aqsha Tracker'"/>
+    <Header :title="'Aqsha Tracker'" :right-title="user.name"/>
 
     <q-page-container>
       <router-view />
@@ -14,6 +14,7 @@
 <script>
 import BottomBar from "components/BottomBar.vue"
 import Header from "components/Header.vue"
+import {mapGetters} from "vuex"
 
 export default {
   name: "MainLayout",
@@ -42,6 +43,11 @@ export default {
         }
         ]
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'users/getUser'
+    })
   },
   methods: {
     logger(item) {
