@@ -40,6 +40,8 @@ app.use(hpp({
     // here I can whitelist some parameters
   ]
 }))
+
+// Disable cors for our front dev
 app.use(cors({
   origin: 'http://localhost:8080',
   optionsSuccessStatus: 200
