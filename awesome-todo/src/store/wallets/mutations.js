@@ -1,3 +1,3 @@
-export function setWallets(state, user) {
-  state.user = user
+export function setWallets(state, wallets) {
+  state.wallets = wallets
 }
