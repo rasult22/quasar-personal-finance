@@ -1,18 +1,28 @@
 <template>
-  <q-page padding>
+  <q-page class="q-pa-md" padding>
+    <q-carousel
+      v-model="currentWallet"
+      transition-prev="slide-right"
+      transition-next="slide-left"
+      swipeable
+      animated
+      navigation
+      control-color="black"
+      height="auto"
+      ref="carousel"
+      class="center-controls"
+    >
+      <q-carousel-slide v-for="wallet in wallets" :key="wallet._id" :name="wallet.name" class="">
+        <AppCard>
+            <template #title>
+              {{wallet.balance}} {{ wallet.currency.sign}}
+            </template>
+            {{wallet.name}}
+        </AppCard>
+      </q-carousel-slide>        
+    </q-carousel>
+    
     <q-card class="my-card">
-      <q-card-section>
-        <div>
-          <div class="text"> Username: {{user.name}}</div>
-          <div class="text-h6">{{getAccount.name}}</div>
-          <div class="text-subtitle2">Balance: {{getAccount.balance.toLocaleString('en-US')}} {{getAccount.currency}}</div>
-        </div>
-        <div class="q-mt-md" v-if="getAccount.hasDiffCurrency">
-          <p class="text-subtitle2">Additional account</p>
-          <p class="text-subtitle2">Balance: {{ getAccount.diffBalance.toLocaleString('en-US')   }} {{getAccount.diffCurrency}} </p>
-        </div>
-        <div></div>
-      </q-card-section>
       <!-- <q-card-section>
         <p class="color-red">Total Spending: - 36.999 ₸</p>
         <p class="color-green">Total Income: + 62.250 ₸</p>
@@ -27,21 +37,25 @@
 <script>
 import OpearationForm from './OperationForm'
 import DropdownTable from '../../components/DropdownTable'
+import AppCard from '../../components/AppCard'
 import {mapGetters} from 'vuex'
 export default {
   components: {
     OpearationForm,
-    DropdownTable
+    DropdownTable,
+    AppCard
   },
   computed: {
     ...mapGetters({
       getAccount: 'mainPage/getAccount',
       user: 'users/getUser',
+      wallets: 'wallets/getWallets',
       operations: 'mainPage/getOperations'
     })
   },
   data() {
     return {
+      currentWallet: ''
     }
   },
   created() {
@@ -55,15 +69,18 @@ export default {
     })
   },
   watch: {
-    operations(val){
+    wallets(val){
       console.log(val)
+      if(val.length) {
+        this.currentWallet = val[0].name
+      }
 
     }
   }
 
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .tr-income {
   //transform: scale(1);
   &::before {
@@ -91,5 +108,16 @@ export default {
     background:red;
     border-radius: 100%;
   }
+}
+
+.center-controls {
+  .q-carousel__navigation {
+    justify-content: center;
+
+    &-icon {
+      font-size: 8px !important;
+    }
+  }
+
 }
 </style>
