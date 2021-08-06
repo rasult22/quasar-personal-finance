@@ -27,7 +27,8 @@ module.exports = function (/* ctx */) {
     css: [
       'app.scss',
       'main.scss',
-      'flex-grid.scss'
+      'flex-grid.scss',
+      'spaces.scss'
     ],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras

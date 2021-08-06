@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md" padding>
+  <q-page class="" padding>
     <q-carousel
       v-model="currentWallet"
       transition-prev="slide-right"
@@ -21,14 +21,9 @@
         </AppCard>
       </q-carousel-slide>        
     </q-carousel>
-    
-    <q-card class="my-card">
-      <!-- <q-card-section>
-        <p class="color-red">Total Spending: - 36.999 ₸</p>
-        <p class="color-green">Total Income: + 62.250 ₸</p>
-      </q-card-section> -->
-    </q-card>
-    <DropdownTable :operations="operations" />
+      <div class="pl1 pr1">
+        <DropdownTable :operations="operations"/>
+      </div>
     
     <OpearationForm />
   </q-page>
@@ -59,7 +54,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('mainPage/someAction')
+    // this.$store.dispatch('mainPage/someAction')
     this.$store.dispatch('users/getUserById', {
       token: process.env.TEST_USER_TOKEN,
       id: process.env.TEST_USER_ID
@@ -80,7 +75,7 @@ export default {
 
 }
 </script>
-<style lang="scss">
+<style lang="scss" >
 .tr-income {
   //transform: scale(1);
   &::before {
@@ -111,9 +106,14 @@ export default {
 }
 
 .center-controls {
+  padding-bottom: 20px;
+  .q-carousel__slide {
+    padding: 10px;
+    padding-bottom: 30px;
+  }
   .q-carousel__navigation {
     justify-content: center;
-
+    bottom: -10px;
     &-icon {
       font-size: 8px !important;
     }
