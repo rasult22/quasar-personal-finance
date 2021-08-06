@@ -5,3 +5,32 @@
   .show-on-desktop { display: none !important;}
 }
 
+
+// Text
+.t {
+  &left {
+    text-align: left;
+  }
+  &center {
+    text-align: center;
+  }
+  &right {
+    text-align: right;
+  }
+}
+
+// Width
+.w {
+  &100 {
+    width: 100%;
+  }
+}
+
+// Cut long text
+.cut {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+

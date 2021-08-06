@@ -1,0 +1,88 @@
+// Margin
+.m {
+  &auto { margin: auto; }
+  &0 { margin: 0; }
+  &05 { margin: 5px; }
+  &15 { margin: 15px; }
+  @for $i from 1 through 5 {
+    &#{1 * $i} { margin: 10px * $i; }
+  }
+
+  // Left
+  &lauto { margin-left: auto; }
+  &l0 { margin-left: 0; }
+  &l05 { margin-left: 5px; }
+  &l15 { margin-left: 15px; }
+  @for $i from 1 through 5 {
+    &l#{1 * $i} { margin-left: 10px * $i; }
+  }
+
+  // Top
+  &tauto { margin-top: auto; }
+  &t0 { margin-top: 0; }
+  &t05 { margin-top: 5px; }
+  &t15 { margin-top: 15px; }
+  @for $i from 1 through 5 {
+    &t#{1 * $i} { margin-top: 10px * $i; }
+  }
+
+  // Right
+  &rauto { margin-right: auto; }
+  &r0 { margin-right: 0; }
+  &r05 { margin-right: 5px; }
+  &r15 { margin-right: 15px; }
+  @for $i from 1 through 5 {
+    &r#{1 * $i} { margin-right: 10px * $i; }
+  }
+
+  // Bottom
+  &bauto { margin-bottom: auto; }
+  &b0 { margin-bottom: 0; }
+  &b05 { margin-bottom: 5px; }
+  &b15 { margin-bottom: 15px; }
+  @for $i from 1 through 5 {
+    &b#{1 * $i} { margin-bottom: 10px * $i; }
+  }
+}
+
+// Padding
+.p {
+  &0 { padding: 0; }
+  &05 { padding: 5px; }
+  &15 { padding: 15px; }
+  @for $i from 1 through 5 {
+    &#{1 * $i} { padding: 10px * $i; }
+  }
+
+  // Left
+  &l0 { padding-left: 0; }
+  &l05 { padding-left: 5px; }
+  &l15 { padding-left: 15px; }
+  @for $i from 1 through 5 {
+    &l#{1 * $i} { padding-left: 10px * $i; }
+  }
+
+  // Top
+  &t0 { padding-top: 0; }
+  &t05 { padding-top: 5px; }
+  &t15 { padding-top: 15px; }
+  @for $i from 1 through 5 {
+    &t#{1 * $i} { padding-top: 10px * $i; }
+  }
+
+  // Right
+  &r0 { padding-right: 0; }
+  &r05 { padding-right: 5px; }
+  &r15 { padding-right: 15px; }
+  @for $i from 1 through 5 {
+    &r#{1 * $i} { padding-right: 10px * $i; }
+  }
+
+  // Bottom
+  &b0 { padding-bottom: 0; }
+  &b05 { padding-bottom: 5px; }
+  &b15 { padding-bottom: 15px; }
+  @for $i from 1 through 5 {
+    &b#{1 * $i} { padding-bottom: 10px * $i; }
+  }
+}
