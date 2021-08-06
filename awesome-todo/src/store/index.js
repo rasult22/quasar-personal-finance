@@ -4,6 +4,7 @@ import axios from 'axios'
 import mainPage from './main-page/index'
 import users from './users/index'
 import wallets from './wallets/index'
+import transactions from './transactions/index'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ export default function (/* { ssrContext } */) {
     modules: {
       mainPage,
       users,
-      wallets
+      wallets,
+      transactions
     },
 
     // enable strict mode (adds overhead!)
