@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../../../controllers/auth')
-const {createWallet, updateWallet, deleteWallet, getAll} = require('../../../controllers/wallet')
+const { changeBalance, createWallet, updateWallet, deleteWallet, getAll } = require('../../../controllers/wallet')
 
 router.get('/', auth.protect, getAll)
 
@@ -13,6 +13,7 @@ router.patch('/:id', auth.protect, updateWallet)
 
 router.delete('/:id', auth.protect, deleteWallet)
 
+router.patch('/changeBalance', auth.protect, changeBalance)
 
 
 

@@ -61,3 +61,10 @@ exports.deleteWallet = catchAsync(async (req, res, next) => {
     data: null
   })
 })
+
+exports.changeBalance = catchAsync(async (req, res, next) => {
+  
+  // 1. Figure out transaction type
+  // 2. Save amount from body
+  // 3. Apply transaction opeartions
+})

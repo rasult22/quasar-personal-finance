@@ -50,7 +50,7 @@ module.exports = function (/* ctx */) {
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
       env: {
-        VUE_APP_SERVER_URL: 'http://127.0.0.1:5000/api/v1',
+        VUE_APP_SERVER_URL: 'http://127.0.0.1:2323/api/v1',
         TEST_USER_TOKEN:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDg0MDZiOTM4OTJjMzc3MDY3N2FjMyIsImlhdCI6MTYyNzkzMDczMSwiZXhwIjoxNjM1NzA2NzMxfQ.c65L7EJkT5SYQDdHoLjXFoX7X_sBtoVmZyA3V3yb4Ow',
         TEST_USER_ID: '6108406b93892c3770677ac3'
       },

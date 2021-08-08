@@ -1,10 +1,15 @@
 const Transaction = require('../models/transactionModel')
+const Wallet = require('../models/walletModel')
+
 const APIFeatures = require('../utils/apiFeatures')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
  
 exports.createTransaction = catchAsync(async (req, res) => {
     const newTransaction = await Transaction.create(req.body)
+
+    // here patch wallet balance
+
     res.status(201).json({
       status: 'success',
       data: { 
