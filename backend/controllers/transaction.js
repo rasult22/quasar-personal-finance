@@ -8,12 +8,28 @@ const catchAsync = require('../utils/catchAsync')
 exports.createTransaction = catchAsync(async (req, res) => {
     const newTransaction = await Transaction.create(req.body)
 
-    // here patch wallet balance
+    // Compute and update new balance for current wallet.
+    const walletID = newTransaction.wallet
+    let targetWallet = await Wallet.findById({_id: walletID})
+
+    let newBalance = 0
+
+    if(newTransaction.type === 'income') {
+      newBalance = targetWallet.balance + newTransaction.amount
+    } else if(newTransaction.type === 'expanse') {
+      newBalance = targetWallet.balance - newTransaction.amount
+    }
+
+    targetWallet = await Wallet.findOneAndUpdate({_id: walletID}, {balance: newBalance}, {new:true})
+    
+
+    console.log(targetWallet, newTransaction.wallet)
 
     res.status(201).json({
       status: 'success',
       data: { 
-        transaction: newTransaction
+        transaction: newTransaction,
+        wallet: targetWallet
       }
     })    
 })
