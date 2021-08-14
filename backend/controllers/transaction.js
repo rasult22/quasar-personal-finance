@@ -16,7 +16,7 @@ exports.createTransaction = catchAsync(async (req, res) => {
 
     if(newTransaction.type === 'income') {
       newBalance = targetWallet.balance + newTransaction.amount
-    } else if(newTransaction.type === 'expanse') {
+    } else if(newTransaction.type === 'expense') {
       newBalance = targetWallet.balance - newTransaction.amount
     }
 
