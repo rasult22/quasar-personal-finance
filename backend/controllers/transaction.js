@@ -23,7 +23,7 @@ exports.createTransaction = catchAsync(async (req, res) => {
     targetWallet = await Wallet.findOneAndUpdate({_id: walletID}, {balance: newBalance}, {new:true})
     
 
-    console.log(targetWallet, newTransaction.wallet)
+    // console.log(targetWallet, newTransaction.wallet)
 
     res.status(201).json({
       status: 'success',
@@ -57,6 +57,7 @@ exports.getTransactions =  catchAsync(async (req, res) => {
     
     const features = new APIFeatures(Transaction.find(), req.query)
     .limitFields()
+    .filter()
     const transactions = await features.mongoQuery
     res.status(200).json({
       status: 'success',

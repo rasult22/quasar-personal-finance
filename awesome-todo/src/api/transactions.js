@@ -11,6 +11,15 @@ const transactions = {
         Authorization: process.env.TEST_USER_TOKEN
       }
     })
+  },
+
+  getTransactionsByWallet (wallet) {
+    return axios.get(`/transactions?wallet=${wallet}`, {
+      baseURL: this.api,
+      headers: {
+        Authorization: process.env.TEST_USER_TOKEN,
+      }
+    })
   }
 }
 
